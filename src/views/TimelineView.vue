@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { PostPartial, PostId, PostResponse } from "@/types";
-import { reactive, ref, toRef } from "vue";
+import type { PostPartial } from "@/types";
+import { reactive, ref } from "vue";
 import { fetchFromApi } from "@/api/base";
 import HomeLayout from "@/layouts/HomeLayout.vue";
 import Post from "@/components/Post.vue"
