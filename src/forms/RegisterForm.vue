@@ -3,9 +3,8 @@
     import Form from "./Form.vue"
     import Button from "@/components/Button.vue";
     import Input from "@/components/Input.vue";
-    import router from "@/router";
     import type { Registration, Token } from "@/types";
-    import { reactive, ref } from "vue";
+    import { reactive, ref, toRef } from "vue";
 
     const emit = defineEmits<{ success: [access: string] }>()
 
@@ -13,8 +12,8 @@
     const data = reactive(new Map())
     const errors = reactive(new Map())
 
-    function handleChange(name: string, event: Event) {
-        data.set(name, (event.target as HTMLInputElement).value)
+    function handleChange(name: string, value: string) {
+        data.set(name, value)
     }
 
     async function handleSubmit() {
@@ -40,20 +39,24 @@
     <Form type="credentials" title="Register" name="register" :message @submit="handleSubmit">
         <template #inputs>
             <Input 
-                type="text" name="username" label="Username" :data :errors
-                @changed="(event) => handleChange('username', event)"
+                type="text" name="username" label="Username" :errors
+                :initial="toRef(data.get('username') ?? '')"
+                @changed="handleChange"
             />
             <Input 
-                type="text" name="display_name" label="Display Name" :data :errors
-                @changed="(event) => handleChange('display_name', event)"
+                type="text" name="display_name" label="Display Name" :errors
+                :initial="toRef(data.get('display_name') ?? '')"
+                @changed="handleChange"
             />
             <Input 
-                type="password" name="password" label="Password" :data :errors
-                @changed="(event) => handleChange('password', event)"
+                type="password" name="password" label="Password" :errors
+                :initial="toRef(data.get('password') ?? '')"
+                @changed="handleChange"
             />
             <Input 
-                type="confirm" name="confirm" label="Confirm Password" :data :errors
-                @changed="(event) => handleChange('confirm', event)"
+                type="confirm" name="confirm" label="Confirm Password" :errors
+                :initial="toRef(data.get('confirm') ?? '')"
+                @changed="handleChange"
             />
         </template>
         <template #buttons>

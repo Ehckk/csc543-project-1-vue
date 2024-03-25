@@ -1,25 +1,23 @@
 <script setup lang="ts">
-import { computed, ref, watch, type InputTypeHTMLAttribute } from 'vue'
+import { computed, ref, watch, type InputTypeHTMLAttribute, type Ref } from 'vue'
 
 interface InputProps {
     type: InputTypeHTMLAttribute
     name: string
     label: string
+    initial: Ref<string>
     placeholder?: string
-    data: Map<string, string>
     errors: Map<string, string>
 }
 
-const { name, data, errors } = defineProps<InputProps>()
+const { name, initial, errors } = defineProps<InputProps>()
 const emit = defineEmits<{ changed: [name: string, value: string] }>()
 
 
-const value = computed(() => {
-    console.log(data)
-    return data.get(name)
-})
+const value = ref(initial ?? "")
 const error = computed(() => errors.get(name)) 
 
+watch(initial, () => value.value = initial.value)
 watch(value, () => emit('changed', name, value.value ?? ""))
 </script>
 

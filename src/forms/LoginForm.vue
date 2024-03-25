@@ -4,7 +4,7 @@ import Form from "./Form.vue"
 import Button from "@/components/Button.vue";
 import Input from "@/components/Input.vue";
 import type { Credentials, Token } from "@/types";
-import { reactive, ref } from "vue";
+import { reactive, ref, toRef } from "vue";
 
 const emit = defineEmits<{ success: [access: string] }>()
 
@@ -39,8 +39,16 @@ async function handleSubmit() {
 <template>
     <Form type="credentials" title="Log in" name="login" :message>
         <template #inputs>
-            <Input type="text" name="username" label="Username" :data :errors @changed="handleChange"/>
-            <Input type="password" name="password" label="Password" :data :errors @changed="handleChange"/>
+            <Input 
+                type="text" name="username" label="Username" :data :errors 
+                :initial="toRef(data.get('username') ?? '')"
+                @changed="handleChange"
+            />
+            <Input 
+                type="password" name="password" label="Password" :data :errors 
+                :initial="toRef(data.get('password') ?? '')"
+                @changed="handleChange"
+            />
         </template>
         <template #buttons>
             <Button size="large" @clicked="handleSubmit">
