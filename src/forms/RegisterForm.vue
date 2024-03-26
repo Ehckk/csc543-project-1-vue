@@ -65,7 +65,7 @@
             </Button>
         </template>
         <template #links>
-            <p>Already have an account? <RouterLink to="/register">Sign In</RouterLink></p>
+            <p>Already have an account? <RouterLink to="/login">Sign In</RouterLink></p>
         </template>
     </Form>
 </template>
